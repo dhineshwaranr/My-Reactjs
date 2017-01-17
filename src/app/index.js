@@ -1,26 +1,25 @@
 import React from "react";
-import { render } from "react-dom"
+import { render } from "react-dom";
+import { Router, Route, browserHistory, IndexRoute } from "react-router";
 
-import { Header } from  "./components/navigation/Header";
+import {Root} from "../app/Root"
 import { Dashboard } from "./components/core/Dashboard";
+import { User } from "./components/user/User";
+
+//https://github.com/reactjs/react-router-tutorial/tree/master/lessons
 
 class App extends React.Component {
     render() {
-        var user = {
-            age:24,
-            hobbies:["Reading","Coding"]
-        };
         return(
-            <div className="container">
-                <div className="row">
-                    <Header />
-                </div>
-                <div className="row">
-                    <Dashboard name={"Dinesh"} user={user}>
-                        <p>Im a child paragraph!!!</p>
-                    </Dashboard>
-                </div>
-            </div>
+            <Router history={browserHistory}>
+               <Route path={"/"} component={Root}>
+                   <IndexRoute component={Dashboard} />
+                   <Route  path={"dashboard"} component={Dashboard}/>
+                   <Route path={"user"} component={User}/>
+                   <Route path={"user/:id"} component={User}/>
+               </Route>
+                <Route path={"users"} component={User}/>
+            </Router>
         );
     }
 }
